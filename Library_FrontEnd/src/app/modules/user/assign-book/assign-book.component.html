@@ -1,0 +1,97 @@
+<div id="page-wrapper">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header" style="color:red">Books</h1>
+    </div>
+
+  </div>
+
+  <div class="content-section implementation ui-fluid">
+    <p-table #dt [value]="books" [paginator]="true" [rows]="10">
+      <ng-template pTemplate="header">
+
+        <tr>
+          <th *ngFor="let col of cols">
+            {{col.header}}
+          </th>
+          <th style="width:4em">View</th>
+          <th style="width:4em">Assign</th>
+        </tr>
+
+        <tr>
+          <th *ngFor="let col of cols" [ngSwitch]="col.field">
+            <input *ngSwitchCase="'name'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+            <p-dropdown *ngSwitchCase="'category'" [options]="category" [style]="{'width':'100%'}" (onChange)="dt.filter($event.value, col.field, 'equals')"></p-dropdown>
+            <input *ngSwitchCase="'isbn'" pInputText type="text" (input)="dt.filter($event.target.value, col.field, col.filterMatchMode)">
+          </th>
+          <th></th>
+          <th></th>
+        </tr>
+
+      </ng-template>
+      <ng-template pTemplate="body" let-book>
+        <tr>
+          <td *ngFor="let col of cols">
+            {{book[col.field]}}
+          </td>
+          <td>
+            <button pButton icon="fa fa-eye" (click)="showDialog(book)"></button>
+          </td>
+          <td>
+            <button pButton icon="fa fa-tasks" (click)="selectBook(book)"></button>
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+
+
+  <p-dialog width="600" header="Details" [(visible)]="display" [modal]="true" [baseZIndex]="10000">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div>
+        <i class="fa fa-user-o" aria-hidden="true"></i>
+        <p style="display: inline-block;padding-left:10px;">{{viewBook != undefined ?viewBook.authors:""}}</p>
+      </div>
+      <div>
+        <i class="fa fa-book" aria-hidden="true"></i>
+        <p style="display: inline-block;padding-left:10px;">{{viewBook != undefined ?viewBook.name:""}}</p>
+      </div>
+      <div>
+        <i class="fa fa-send" aria-hidden="true"></i>
+        <p style="display: inline-block;padding-left:10px;">{{viewBook != undefined ?viewBook.isbn:""}}</p>
+      </div>
+      <div>
+        <i class="fa fa-audio-description" aria-hidden="true"></i>
+        <p style="display: inline-block;padding-left:10px;">{{viewBook != undefined ?viewBook.description:""}}</p>
+      </div>
+      <div>
+        <i class="fa fa-image" aria-hidden="true"></i>
+        <p style="display: inline-block;padding-left:10px;">
+          <img *ngIf="viewBook  !=undefined" [src]="viewBook.imageUrl">
+        </p>
+      </div>
+    </div>
+  </p-dialog>
+
+
+  <p-dialog width="600" header="Details" [(visible)]="assignModal" [modal]="true" [baseZIndex]="10000">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div>Max No of Days to Return:
+        <span style="font-weight: bolder"> 5</span>
+      </div>
+      <div>Last Date:
+        <span style="font-weight: bolder"> {{lastDate | date: 'dd/MM/yyyy HH:mm'}}
+        </span>
+      </div>
+      <div class="text-center">
+        <button (click)="assign()" class="btn btn-success">Assign</button>
+      </div>
+
+    </div>
+  </p-dialog>
+
+  <p-dialog header="Limit Exceeded !" [(visible)]="limitBookDialog" [modal]="true" [baseZIndex]="10000">
+    Only 5 Books are allowed
+  </p-dialog>
+
+</div>

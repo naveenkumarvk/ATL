@@ -1,0 +1,16 @@
+<div id="page-wrapper">
+  <div class="row">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div class="text-center" style="margin-top: 5%">
+      
+        <p-card  [style]="{width: '250px'}" styleClass="ui-card-shadow">
+          <p-header>
+              <img *ngIf="profile != undefined" [src]="profile.imageUrl">
+          </p-header>
+          <div>{{profile != undefined?profile.name:""}}</div>
+          <div>{{profile != undefined?profile.email:""}}</div>
+        </p-card>
+      </div>
+    </div>
+  </div>
+</div>

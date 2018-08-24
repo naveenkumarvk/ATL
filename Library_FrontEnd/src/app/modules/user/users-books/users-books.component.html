@@ -1,0 +1,73 @@
+<div id="page-wrapper">
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header" style="color:red">Your Books</h1>
+    </div>
+
+  </div>
+
+ 
+
+  
+
+  <div class="content-section implementation ui-fluid">
+    <p-table #dt [value]="books" [paginator]="true" [rows]="10">
+      <ng-template pTemplate="header">
+        <tr>
+          <th *ngFor="let col of cols" [pSortableColumn]="col.field">
+            {{col.header}}
+            <p-sortIcon [field]="col.field" ariaLabel="Activate to sort" ariaLabelDesc="Activate to sort in descending order" ariaLabelAsc="Activate to sort in ascending order"></p-sortIcon>
+          </th>
+          <th style="width:4em">Renew</th>
+          <th style="width:4em">Return</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-book>
+        <tr>
+          <td *ngFor="let col of cols">
+            {{col.field == 'lastDate'? (book[col.field] | date: 'dd-MM-yyyy HH:mm'):book[col.field]}}
+          </td>
+          <td>
+            <button pButton icon="fa fa-tasks" (click)="renew(book)"></button>
+          </td>
+          <td>
+            <button pButton icon="fa fa-undo" (click)="return(book)"></button>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage" let-columns>
+        <!-- <tr>
+          <td [attr.colspan]="columns.length">
+            No Records Founds found
+          </td>
+        </tr> -->
+        <p>No Records Found</p>
+      </ng-template>
+    </p-table>
+  </div>
+  <div *ngIf="checkSubscribeStatus" class="row" style="margin-top: 20px" >
+      <i class="fa fa-bell-o" style="cursor: pointer;" (click)="getNotification()"></i>
+      <span>Click Bell Get alerts of new books</span>
+  </div>
+
+ 
+
+  <p-dialog width="600" header="Renew" [(visible)]="renewModal" [modal]="true" [baseZIndex]="10000">
+    <div class="col-lg-12 col-md-12 col-sm-12">
+      <div>Extra Days:
+        <span style="font-weight: bolder"> 5</span>
+      </div>
+      <div>Last Date:
+        <span style="font-weight: bolder"> {{lastDate | date: 'dd/MM/yyyy HH:mm'}}
+        </span>
+      </div>
+      <div class="text-center">
+        <button (click)="assign()" class="btn btn-success">Assign</button>
+      </div>
+
+    </div>
+  </p-dialog>
+
+  
+
+</div>

@@ -1,0 +1,9 @@
+{
+    "database": {
+        "password": "",
+        "dialect": "mongodb",
+        "name": "basicmongo",
+        "host": "localhost:27017",
+        "username": ""
+    }
+}

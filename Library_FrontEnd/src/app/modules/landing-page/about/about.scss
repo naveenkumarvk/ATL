@@ -1,0 +1,25 @@
+@import '../../../../shared/scss/shared.scss';
+
+.about-area {
+    background-color: #f9f9f9;
+  }
+  
+  .single-well>a {
+    display: block;
+  }
+  
+  .single-well ul li {
+    color: #444;
+    display: block;
+    padding: 5px 0;
+  }
+  
+  .single-well ul li i {
+    color: #3EC1D5;
+    padding-right: 10px;
+    font-size: 12px;
+  }
+  
+  .single-well p {
+    color: #444;
+  }
